@@ -17,7 +17,21 @@
 		</h2>
 
 		<h3>Clients</h3>
-		<p th:each="client: ${bank.clients}" th:text="${client.name}">Client</p>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="client: ${bank.clients}">
+					<td th:text="${client.name}">Name of Client</td>
+					<td th:text="${client.age}">Age of Client</td>
+				</tr>
+			</tbody>
+</table>
+		
 
 	</div>
 </body>
