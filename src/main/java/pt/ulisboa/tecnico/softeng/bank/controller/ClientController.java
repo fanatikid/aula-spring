@@ -43,13 +43,14 @@ public class ClientController {
 		logger.info("clientSubmit bankCode:{}, clientName:{}", code, client.getName());
 
 		try {
-			Bank.getBankByCode(code).addClient(
-					new Client(
-							Bank.getBankByCode(code), 
-							Bank.getBankByCode(code).getCode() + Bank.getBankByCode(code).getClients().size(), 
-							client.getName(), 
-							client.getAge()));
-			
+			Client client2add = new Client(
+					Bank.getBankByCode(code), 
+					Bank.getBankByCode(code).getCode() + Bank.getBankByCode(code).getClients().size(), 
+					client.getName(), 
+					client.getAge()); 
+			Bank.getBankByCode(code).addClient(client2add);
+					
+			logger.info("clientSubmit name:{}, ID:{}", client2add.getBank().getCode(), client2add.getId());
 		} catch (BankException be) {
 			model.addAttribute("error", "Error: it was not possible to create the client");
 			model.addAttribute("client", client);
@@ -58,5 +59,22 @@ public class ClientController {
 		}
 
 		return "redirect:/banks/bank/" + code;
+}
+
+	@RequestMapping(value = "/client/{id}", method = RequestMethod.GET)
+	public String showClient(Model model, @PathVariable String code, @PathVariable String id) {
+		logger.info("showBank  bankCode:{}, clientId:{}", code, id);
+
+		
+		for (Client client : Bank.getBankByCode(code).getClients()) {
+			logger.info("searching...");
+			if (client.getId().equals(id)) {
+				logger.info("client Found! Name:{}, clientId:{}", client.getName(), client.getId());
+				model.addAttribute("client", client);
+				return "clientView";
+			}
+		}
+		
+		return "clientView";
 }
 }

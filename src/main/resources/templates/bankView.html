@@ -45,12 +45,15 @@
 				<tr>
 					<th>Name</th>
 					<th>Age</th>
+					<th>ID</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="client: ${bank.clients}">
 					<td th:text="${client.name}">Name of Client</td>
 					<td th:text="${client.age}">Age of Client</td>
+					<td th:text="${client.id}">Internal ID of Client</td>
+					<td><a th:href="@{/banks/bank/{code}/clients/client/{id}(code=${bank.code}, id=${client.id})}">Page</a></td>
 				</tr>
 			</tbody>
 </table>
